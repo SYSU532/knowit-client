@@ -11,12 +11,12 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup1">
-                <VisualState x:Name="VisualState600">
+                <VisualState x:Name="VisualState700">
                     <VisualState.Setters>
                         <Setter Target="Logo.(UIElement.Visibility)" Value="Visible"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="600"/>
+                        <AdaptiveTrigger MinWindowHeight="700"/>
                     </VisualState.StateTriggers>
                 </VisualState>
                 <VisualState x:Name="VisualState0">
@@ -43,13 +43,14 @@
 
             <Grid x:Name="TopGridArea" Grid.Row="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition x:Name="TopTitleRow" Height="*"/>
-                    <RowDefinition x:Name="TopThumbRow" Height="8*"/>
+                    <RowDefinition x:Name="TopTopRow" Height="2*"/>
+                    <RowDefinition x:Name="TopTitleRow" Height="2*"/>
+                    <RowDefinition x:Name="TopThumbRow" Height="6*"/>
                 </Grid.RowDefinitions>
-                <TextBlock x:Name="Title" Text="Know-It" HorizontalAlignment="Center"  VerticalAlignment="Bottom" 
+                <TextBlock x:Name="Title" Grid.Row="1" Text="Know-It" HorizontalAlignment="Center"  VerticalAlignment="Bottom" 
                            FontWeight="Bold" FontSize="30"/>
-                <Image x:Name="Logo" Source="Assets/knowit.png" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Height="200" Width="200"/>
+                <Image x:Name="Logo" Source="Assets/knowit.png" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Height="180" Width="180"/>
             </Grid>
 
         <TextBox x:Name="UserNameBox" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" GotFocus="UserNameBox_GotFocus"
@@ -66,15 +67,15 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="LoginButton" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Height="40" Width="100" Content="Sign In" Click="LoginButton_Click"/>
+                            Height="40" Width="80" Content="Sign In" Click="LoginButton_Click"/>
                     <Button x:Name="SignupButton" Click="SignupButton_Click"  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Height="40" Width="100" Content="Sign Up"/>
+                            Height="40" Width="80" Content="Sign Up"/>
                 </Grid>
                 <Button x:Name="ServerChangeButton" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
                         Height="40" Width="200" Content="Change Server">
