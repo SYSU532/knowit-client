@@ -143,6 +143,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <PersonPicture
+                            Name="personPic"
                         Grid.Column="0"
                         Width="70"
                         Height="70"
@@ -153,12 +154,12 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="1" Text="Jian Yang"/>
+                            <TextBlock Name="usernameText" Grid.Row="1" Text="Jian Yang"/>
                         </Grid>
                     </Grid>
                 </NavigationViewItem>
                 <NavigationViewItemSeparator/>
-                <NavigationViewItem Icon="Play" Content="Menu Item1" Tag="SamplePage1" />
+                <NavigationViewItem Icon="Play" Content="注销" Tag="logout" />
                 <NavigationViewItem Icon="Save" Content="Menu Item2" Tag="SamplePage2" />
                 <NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
             </NavigationView.MenuItems>

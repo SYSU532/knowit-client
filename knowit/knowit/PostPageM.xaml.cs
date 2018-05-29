@@ -14,9 +14,7 @@ namespace knowit
         public PostPageM()
         {
             this.InitializeComponent();
-            myViewModels.AddPost(1, "Jian Yang", "Not Hotdog", "5", "", "");
-            myViewModels.AddPost(2, "Richard", "Pie Pieper", "2", "", "");
-            myViewModels.AddPost(2, "Bighetti", "Nippler", "3", "", "");
+
         }
         private void Post_Click(object sender, ItemClickEventArgs args)
         {

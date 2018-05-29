@@ -212,11 +212,16 @@ namespace knowit
                 else if (res["code"] == "1")
                 {
                     msg = "Success!";
+                    success = true;
                 }
                 MessageDialog dialog = new MessageDialog(msg);
                 await dialog.ShowAsync();
                 if (success)
                 {
+                    string[] temp = new string[2];
+                    temp[0] = UsernameBox.Text;
+                    temp[1] = PasswordBox.Password;
+                    Frame.Navigate(typeof(MainPage), temp);
                     //go to content page, passing a pair with username as key and password as value as parameter.
                 }
 

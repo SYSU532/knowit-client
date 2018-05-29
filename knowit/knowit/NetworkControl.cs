@@ -220,7 +220,8 @@ namespace knowit
             {
                 var postDict = await GetPostFromID(username, password, id);
                 PostItem item = PostDictToPostItem(postDict);
-                if (item == null) {
+                if (item == null)
+                {
                     Debug.WriteLine("Server Error!");
                     continue;
                 }
@@ -397,7 +398,7 @@ namespace knowit
                                                                             string phone, string email, StorageFile avatar)
         {
             HttpClient client = new HttpClient();
-           
+
             Stream fileStream = await avatar.OpenStreamForReadAsync();
             var buffer = new byte[(int)fileStream.Length];
             fileStream.Read(buffer, 0, (int)fileStream.Length);
@@ -452,8 +453,9 @@ namespace knowit
             HttpClient client = new HttpClient();
             byte[] buffer;
             string fileType = "";
-            if (media != null && (imagePostfixes.Contains(media.FileType.ToLower()) || 
-                videoPostfixes.Contains(media.FileType.ToLower()))) {
+            if (media != null && (imagePostfixes.Contains(media.FileType.ToLower()) ||
+                videoPostfixes.Contains(media.FileType.ToLower())))
+            {
                 Stream fileStream = await media.OpenStreamForReadAsync();
                 buffer = new byte[(int)fileStream.Length];
                 fileStream.Read(buffer, 0, (int)fileStream.Length);
@@ -467,7 +469,7 @@ namespace knowit
 
             ByteArrayContent content = new ByteArrayContent(buffer);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-           
+
 
             bool isImage = imagePostfixes.Contains(fileType);
             bool isVideo = videoPostfixes.Contains(fileType);
@@ -508,13 +510,14 @@ namespace knowit
             }
         }
 
-        public static async Task<Dictionary<string, string>> UserInfoModify(string username, string password, string phone, 
+        public static async Task<Dictionary<string, string>> UserInfoModify(string username, string password, string phone,
                                                                             string email, StorageFile avatar)
         {
             HttpClient client = new HttpClient();
             byte[] buffer;
             string imgType = "";
-            if (avatar != null) {
+            if (avatar != null)
+            {
                 Stream fileStream = await avatar.OpenStreamForReadAsync();
                 buffer = new byte[(int)fileStream.Length];
                 fileStream.Read(buffer, 0, (int)fileStream.Length);
@@ -527,7 +530,7 @@ namespace knowit
             }
             ByteArrayContent content = new ByteArrayContent(buffer);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            
+
 
             StringBuilder builder = new StringBuilder();
             builder.Append(accessName);

@@ -36,6 +36,8 @@ namespace knowit
     public sealed partial class MainPage : Page
     {
         // ListItemViewModels myViewModels = ListItemViewModels.GetInstance();
+        private string username;
+        private string password;
         public MainPage()
         {
             this.InitializeComponent();
@@ -52,6 +54,12 @@ namespace knowit
             myViewModels.AddPost(2, "Richard", "Pie Pieper", "2", "", "");
             myViewModels.AddPost(2, "Bighetti", "Nippler", "3", "", "");*/
         }
+        private async void InitializeUser()
+        {
+            usernameText.Text = username;
+            Dictionary<string, string> info = await NetworkControl.QueryUserInfo(username);
+            string temp = info.ToString();
+        }
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
 
@@ -64,36 +72,20 @@ namespace knowit
         {
 
         }
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            string[] user_info = e.Parameter as string[];
+            username = user_info[0];
+            password = user_info[1];
+            usernameText.Text = username;
+            Dictionary<string, string> info = await NetworkControl.QueryUserInfo(username);
+            string imageUrl = info.GetValueOrDefault<string, string>("imageUrl");
+            personPic.ProfilePicture = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imageUrl), UriKind.Absolute));
+        }
         private void nvAll_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             var item = args.InvokedItem;
-            if (item.GetType() == typeof(Grid))
-            {
-                contentFrame.Navigate(typeof(UserPage));
-            }
-            else if((string)item == "home")
-            {
-                contentFrame.Navigate(typeof(MainPage));
-            }
         }
-        /*private void Post_Click(object sender, ItemClickEventArgs args)
-        {
-            // open post detail page
-            contentFrame.Navigate(typeof(PostPage));
-            CoreApplicationView newView = CoreApplication.CreateNewView();
-            int newViewId = 0;
-            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Frame frame = new Frame();
-                frame.Navigate(typeof(PostPage), null);
-                Window.Current.Content = frame;
-                Window.Current.Activate();
-
-                newViewId = ApplicationView.GetForCurrentView().Id;
-            });
-            bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-        }*/
-
         private void MoreInfoBtn_Click(object sender, RoutedEventArgs e)
         {
 
@@ -125,7 +117,8 @@ namespace knowit
         private void nvAll_Loaded(object sender, RoutedEventArgs e)
         {
             contentFrame.Navigated += On_Navigated;
-            contentFrame.Navigate(typeof(PostPageM));
+            string[] temp = { username, password };
+            contentFrame.Navigate(typeof(PostPageM), temp);
         }
         private void On_Navigated(object sender, NavigationEventArgs e)
         {
