@@ -420,7 +420,7 @@ namespace knowit
             builder.Append("&email=");
             builder.Append(email);
             builder.Append("&imageType=");
-            builder.Append(imgType);
+            builder.Append(imgType.ToLower());
             string url = builder.ToString();
 
             try
@@ -483,9 +483,9 @@ namespace knowit
             builder.Append("&content=");
             builder.Append(passage);
             builder.Append("&imageType=");
-            builder.Append(isImage ? fileType : "");
+            builder.Append(isImage ? fileType.ToLower() : "");
             builder.Append("&mediaType=");
-            builder.Append(isVideo ? fileType : "");
+            builder.Append(isVideo ? fileType.ToLower() : "");
             string url = builder.ToString();
 
             try
@@ -540,7 +540,7 @@ namespace knowit
             builder.Append("&newEmail=");
             builder.Append(email);
             builder.Append("&imgType=");
-            builder.Append(imgType);
+            builder.Append(imgType.ToLower());
             string url = builder.ToString();
 
             try
