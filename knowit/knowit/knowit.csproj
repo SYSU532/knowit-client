@@ -129,7 +129,9 @@
     <None Include="knowit_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\198.png" />
     <Content Include="Assets\jian-yang.png" />
+    <Content Include="Assets\knowit.jpg" />
     <Content Include="Assets\post.png" />
     <Content Include="Assets\thumb.png" />
     <Content Include="Properties\Default.rd.xml" />

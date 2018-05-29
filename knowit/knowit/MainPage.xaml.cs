@@ -85,6 +85,12 @@ namespace knowit
         private void nvAll_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             var item = args.InvokedItem;
+            switch (item)
+            {
+                case "注销":
+                    Frame.Navigate(typeof(SigninPage));
+                    break;
+            }
         }
         private void MoreInfoBtn_Click(object sender, RoutedEventArgs e)
         {
