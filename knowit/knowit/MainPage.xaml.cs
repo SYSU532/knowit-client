@@ -80,16 +80,26 @@ namespace knowit
             usernameText.Text = username;
             Dictionary<string, string> info = await NetworkControl.QueryUserInfo(username);
             string imageUrl = info.GetValueOrDefault<string, string>("imageUrl");
-            personPic.ProfilePicture = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imageUrl), UriKind.Absolute));
+            var newSrc = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imageUrl), UriKind.Absolute));
+            newSrc.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            personPic.ProfilePicture = newSrc;
         }
         private void nvAll_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             var item = args.InvokedItem;
+            if(item.GetType() == typeof(Grid))
+            {
+                string[] info = new string[2];
+                info[0] = username;
+                info[1] = password;
+                contentFrame.Navigate(typeof(UserPage), info);
+            }
             switch (item)
             {
                 case "注销":
                     Frame.Navigate(typeof(SigninPage));
                     break;
+
             }
         }
         private void MoreInfoBtn_Click(object sender, RoutedEventArgs e)

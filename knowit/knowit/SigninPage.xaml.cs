@@ -113,8 +113,10 @@ namespace knowit
                 else if (res["code"] == "1")
                 {
                     string imgUrl = res["imageUrl"];
+                    var newSrc = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imgUrl), UriKind.Absolute));
+                    newSrc.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                    Logo.Source = newSrc;
                     
-                    Logo.Source = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imgUrl), UriKind.Absolute));
                 }
             }
         }
