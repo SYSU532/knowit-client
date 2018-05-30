@@ -17,7 +17,7 @@ namespace knowit
 {
     class NetworkControl
     {
-        public static string AccessingURI = "chat.chenmt.science";
+        public static string AccessingURI = "know.chenmt.science";
         private const string httpsPrefix = "https://";
         public static string accessName { get { return httpsPrefix + AccessingURI; } }
 
