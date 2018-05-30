@@ -9,6 +9,7 @@ using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml;
+using Windows.UI.Popups;
 
 namespace knowit
 {
@@ -30,27 +31,39 @@ namespace knowit
             string imageUrl = info.GetValueOrDefault<string, string>("imageUrl");
             string phone = info.GetValueOrDefault<string, string>("phone");
             string email = info.GetValueOrDefault<string, string>("email");
-            personPic.ProfilePicture = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imageUrl), UriKind.Absolute));
+            var newSrc = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imageUrl), UriKind.Absolute));
+            newSrc.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            personPic.ProfilePicture = newSrc;
             usernameBlock.Text = username;
             phoneBlock.Text = phone;
             emailBlock.Text = email;
         }
         
 
-        private async void Commit_Change(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Commit_Change(object sender, RoutedEventArgs e)
         {
-
             Dictionary<string, string> info = await NetworkControl.UserInfoModify(username, password, phoneBlock.Text, emailBlock.Text, CurrentPic);
             await WebView.ClearTemporaryWebDataAsync();
             
             string status = info["code"];
             if(status != "1")
             {
-                //
+                MessageDialog dialog = new MessageDialog("修改失败！");
+                await dialog.ShowAsync();
+            }
+            else
+            {
+                string[] temp = new string[2];
+                temp[0] = username;
+                temp[1] = password;
+                MessageDialog dialog = new MessageDialog("修改成功！");
+                await dialog.ShowAsync();
+                Frame rootFrame = Window.Current.Content as Frame;
+                rootFrame.Navigate(typeof(MainPage), temp);
             }
         }
 
-        private async void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;

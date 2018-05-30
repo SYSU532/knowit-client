@@ -160,7 +160,7 @@
                 </NavigationViewItem>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItem Icon="Play" Content="注销" Tag="logout" />
-                <NavigationViewItem Icon="Save" Content="Menu Item2" Tag="SamplePage2" />
+                <NavigationViewItem Icon="Save" Content="创建帖子" Tag="create" />
                 <NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>

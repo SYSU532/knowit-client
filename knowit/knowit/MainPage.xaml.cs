@@ -58,7 +58,10 @@ namespace knowit
         {
             usernameText.Text = username;
             Dictionary<string, string> info = await NetworkControl.QueryUserInfo(username);
-            string temp = info.ToString();
+            string imageUrl = info.GetValueOrDefault<string, string>("imageUrl");
+            var newSrc = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imageUrl), UriKind.Absolute));
+            newSrc.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            personPic.ProfilePicture = newSrc;
         }
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
@@ -72,26 +75,21 @@ namespace knowit
         {
 
         }
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             string[] user_info = e.Parameter as string[];
             username = user_info[0];
             password = user_info[1];
-            usernameText.Text = username;
-            Dictionary<string, string> info = await NetworkControl.QueryUserInfo(username);
-            string imageUrl = info.GetValueOrDefault<string, string>("imageUrl");
-            var newSrc = new BitmapImage(new Uri(NetworkControl.GetFullPathUrl(imageUrl), UriKind.Absolute));
-            newSrc.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-            personPic.ProfilePicture = newSrc;
+            InitializeUser();
         }
         private void nvAll_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
+            string[] info = new string[2];
+            info[0] = username;
+            info[1] = password;
             var item = args.InvokedItem;
             if(item.GetType() == typeof(Grid))
             {
-                string[] info = new string[2];
-                info[0] = username;
-                info[1] = password;
                 contentFrame.Navigate(typeof(UserPage), info);
             }
             switch (item)
@@ -99,7 +97,9 @@ namespace knowit
                 case "注销":
                     Frame.Navigate(typeof(SigninPage));
                     break;
-
+                case "创建帖子":
+                    contentFrame.Navigate(typeof(CreatePostPage), info);
+                    break;
             }
         }
         private void MoreInfoBtn_Click(object sender, RoutedEventArgs e)

@@ -9,6 +9,39 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="10" Grid.Column="0" FontSize="15" VerticalAlignment="Bottom" Text="标题"/>
+                <TextBox Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="120" Height="20" Name="title"/>
+                <TextBlock Margin="10" Grid.Row="1" Grid.Column="0" FontSize="15" VerticalAlignment="Bottom" Text="正文"/>
+                <AppBarButton Grid.Row="0" Name="Add" Icon="Add" Click="Add_Click"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">添加</AppBarButton>
+                <AppBarButton Grid.Row="1" Name="Create" Icon="Accept" Click="Create_Click" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">添加</AppBarButton>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Image Name="image" Grid.Column="2"/>
+                <MediaPlayerElement Name="video" Grid.Column="2" AreTransportControlsEnabled="True"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <RichEditBox Name="passage" Margin="10">
+                
+            </RichEditBox>
+        </Grid>
     </Grid>
 </Page>

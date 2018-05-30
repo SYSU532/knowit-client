@@ -262,7 +262,7 @@ namespace knowit
                 var idArray = json.GetNamedArray("postIDs");
                 foreach (var item in idArray)
                 {
-                    li.Add(item.GetString());
+                    li.Add(item.ToString());
                 }
                 return li;
             }
