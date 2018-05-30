@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using Windows.Media.Core;
+using Windows.Media.Streaming.Adaptive;
+using Windows.Networking.BackgroundTransfer;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media.Imaging;
@@ -25,6 +28,10 @@ namespace knowit
             password = info[1];
             id = info[2];
             InitializePost();
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            video.Source = null;
         }
         private async void InitializePost()
         {
@@ -57,8 +64,7 @@ namespace knowit
                 {
                     image.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     var videoUrl = (string)post["media"];
-                    var media = MediaSource.CreateFromUri(new Uri(NetworkControl.GetFullPathUrl(videoUrl), UriKind.Absolute));
-                    video.Source = media;
+                    video.Source = MediaSource.CreateFromUri(new Uri(NetworkControl.GetFullPathUrl(videoUrl), UriKind.Absolute));
                 }
             }
 

@@ -52,7 +52,7 @@ namespace knowit
             if(file != null)
             {
                 media = file;
-                if(file.FileType == "wmv" || file.FileType == "mp4" || file.FileType == "mkv" || file.FileType == "avi")
+                if(file.FileType == ".wmv" || file.FileType == ".mp4" || file.FileType == ".mkv" || file.FileType == ".avi")
                 {
                     image.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     video.Source = MediaSource.CreateFromStorageFile(file);
