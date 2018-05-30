@@ -17,7 +17,7 @@ namespace knowit
 {
     class NetworkControl
     {
-        public static string AccessingURI = "know.chenmt.science";
+        public static string AccessingURI = "chat.chenmt.science";
         private const string httpsPrefix = "https://";
         public static string accessName { get { return httpsPrefix + AccessingURI; } }
 
@@ -182,10 +182,15 @@ namespace knowit
                     {"editor", editor },
                     {"title", title }
                 };
+                
                 List<KeyValuePair<String, String>> commentDict = new List<KeyValuePair<string, string>>();
-                foreach (var pair in comments)
+                for(int i = 0; i < comments.Count; i++)
                 {
-                    commentDict.Add(new KeyValuePair<string, string>(pair.Key, pair.Value.GetString()));
+                    var com = comments.GetNamedObject(i.ToString());
+                    foreach(var pair in com)
+                    {
+                        commentDict.Add(new KeyValuePair<string, string>(pair.Key, pair.Value.GetString()));
+                    }
                 }
                 res.Add("comment", commentDict);
                 return res;
@@ -273,7 +278,36 @@ namespace knowit
             }
         }
 
+        public static async Task<Boolean> CheckUserThumbOrNot(string username, string id)
+        {
+            var requestData = new Dictionary<string, string>
+            {
+                {"name", username},
+                {"id", id }
+            };
 
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.PostAsync(accessName + "/checkThumb", new FormUrlEncodedContent(requestData));
+
+                string responseString = await response.Content.ReadAsStringAsync();
+
+                var json = JsonObject.Parse(responseString);
+                var res = json.GetNamedNumber("haveThumb");
+                if (res == 1)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            catch
+            {
+                //Connection error
+                return false;
+            }
+        }
         public static async Task<Dictionary<string, string>> GiveThumbToPost(string username, string password, string postID)
         {
             var requestData = new Dictionary<string, string>

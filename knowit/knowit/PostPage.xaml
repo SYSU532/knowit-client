@@ -43,9 +43,22 @@
                         </Button>
                         <TextBlock Margin="5" Name="thumb_num" Grid.Column="1"  FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text=""/>
                     </Grid>
-                    <AppBarButton Grid.Row="1" Name="AddComment" Icon="Add" Click="AddComment_Click"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <AppBarButton Name="app" AllowFocusOnInteraction="True" Grid.Row="1" Icon="Add" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                        <AppBarButton.Flyout>
+                            <Flyout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Name="comment" Grid.Column="0" Width="30" Height="20"/>
+                                    <Button Grid.Column="1" Name="AddComment" Click="AddComment_Click">添加评论</Button>
+                                </Grid>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid Margin="10" Grid.Column="1">
                     <Image Visibility="Collapsed" Name="image" Grid.Column="2"/>
                     <MediaPlayerElement Visibility="Collapsed" AutoPlay="True" Name="video" Grid.Column="2" AreTransportControlsEnabled="True"/>
                 </Grid>
@@ -53,13 +66,33 @@
             <Grid Margin="10" Grid.Row="2">
                 <Border BorderBrush="#e3e3e3" BorderThickness="1,1,1,1">
                     <RichTextBlock Name="passage" Margin="10">
-
                     </RichTextBlock>
                 </Border>
             </Grid>
         </Grid>
         <Grid Grid.Column="1">
-            
+            <ListView Name="comment_list" IsItemClickEnabled="False" ItemsSource="{x:Bind myViewModels.allComments}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:CommentItem">
+                        <Border BorderBrush="#e3e3e3" BorderThickness="0,1,0,0">
+                            <Grid Margin="5" Height="70" Width="auto">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" FontSize="25" VerticalAlignment="Center" Text="{x:Bind username}"/>
+                                <TextBlock Grid.Row="1" FontSize="14" Text="{x:Bind comment}" VerticalAlignment="Center"/>
+                                <Border Height="5" Grid.Column="1" Width="auto"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Page>

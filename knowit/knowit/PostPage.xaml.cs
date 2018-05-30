@@ -1,11 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Windows.Media.Core;
 using Windows.Media.Streaming.Adaptive;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media.Imaging;
@@ -14,12 +16,44 @@ using Windows.Web.Http;
 
 namespace knowit
 {
+    class CommentItem
+    {
+        public string username;
+        public string comment;
+        public CommentItem(string username, string comment)
+        {
+            this.username = username;
+            this.comment = comment;
+        }
+    }
+    class CommentItemViewModels
+    {
+        //单例模式
+        private static CommentItemViewModels instance;
+        private CommentItemViewModels() { }
+        public static CommentItemViewModels GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new CommentItemViewModels();
+            }
+            return instance;
+        }
+        public ObservableCollection<CommentItem> allComments = new ObservableCollection<CommentItem>();
+        //添加评论
+        public void AddComment(string username, string content)
+        {
+            allComments.Add(new CommentItem(username, content));
+        }
+    }
     public sealed partial class PostPage : Page
     {
         private string username;
         private string password;
         private string id;
+        private Boolean hasThumb = false;
         private int thumb_click = 0;
+        CommentItemViewModels myViewModels = CommentItemViewModels.GetInstance();
         public PostPage()
         {
             this.InitializeComponent();
@@ -34,21 +68,29 @@ namespace knowit
         }
         protected override async void OnNavigatedFrom(NavigationEventArgs e)
         {
+            
             if (video.Visibility == Windows.UI.Xaml.Visibility.Visible)
             {
+                video.MediaPlayer.Pause();
                 await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     video?.MediaPlayer.Dispose();
                 });
             }
-            if (thumb_click == 1)
+            if (thumb_click == 1 && hasThumb != true)
             {
                 Dictionary<string, string> info = await NetworkControl.GiveThumbToPost(username, password, id);
+            }
+            else if(thumb_click == 0 && hasThumb == true)
+            {
+                Dictionary<string, string> info = await NetworkControl.CancelThumbToPost(username, password, id);
             }
         }
         private async void InitializePost()
         {
-
+            myViewModels.allComments.Clear();
+            hasThumb = await NetworkControl.CheckUserThumbOrNot(username, id);
+            if (hasThumb) thumb_click = 1;
             Dictionary<string, object> post = await NetworkControl.GetPostFromID(username, password, id);
             if((string)post["code"] != "1")
             {
@@ -59,6 +101,7 @@ namespace knowit
                 title.Text = post["title"] as string;
                 author.Text = post["editor"] as string;
                 thumb_num.Text = post["thumbs"] as string;
+                List<KeyValuePair<String, String>> commentDict = post["comment"] as List<KeyValuePair<String, String>>;
                 Run run = new Run
                 {
                     Text = post["content"] as string
@@ -79,21 +122,34 @@ namespace knowit
                     video.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     var videoUrl = (string)post["media"];
                     video.Source = MediaSource.CreateFromUri(new Uri(NetworkControl.GetFullPathUrl(videoUrl), UriKind.Absolute));
-
+                }
+                foreach(var comment in commentDict)
+                {
+                    myViewModels.AddComment(comment.Key, comment.Value);
                 }
             }
 
         }
-        private void AddComment_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void AddComment_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            if(comment.Text == "")
+            {
+                MessageDialog dialog = new MessageDialog("评论不能为空！");
+                await dialog.ShowAsync();
+            }
+            else
+            {
+                app.Flyout.Hide();
+                myViewModels.AddComment(username, comment.Text);
+                Dictionary<string, string> info = await NetworkControl.PostComment(username, password, id, comment.Text);
+            }
         }
 
         private void thumb_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             int res = 0;
             int.TryParse(thumb_num.Text, out res);
-            if(thumb_click == 0)
+            if (thumb_click == 0)
             {
                 thumb_num.Text = (++res).ToString();
                 thumb_click++;
@@ -103,7 +159,6 @@ namespace knowit
                 thumb_num.Text = (--res).ToString();
                 thumb_click--;
             }
-
         }
     }
 }
