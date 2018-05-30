@@ -32,12 +32,22 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Name="title" Margin="10" Grid.Column="0" FontSize="25" VerticalAlignment="Bottom" Text="标题"/>
-                    <TextBlock Name="author" Margin="10" Grid.Row="1" Grid.Column="0" FontSize="25" VerticalAlignment="Bottom" Text="作者"/>
+                    <TextBlock Name="author" Margin="10" Grid.Row="1" Grid.Column="0" FontSize="14" VerticalAlignment="Center" Text="作者"/>
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Background="Transparent" Name="thumb" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="thumb_Click">
+                            <Image Source="Assets/thumb.png" Width="15" Height="15"/>
+                        </Button>
+                        <TextBlock Margin="5" Name="thumb_num" Grid.Column="1"  FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text=""/>
+                    </Grid>
                     <AppBarButton Grid.Row="1" Name="AddComment" Icon="Add" Click="AddComment_Click"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Image Name="image" Grid.Column="2"/>
-                    <MediaPlayerElement Name="video" Grid.Column="2" AreTransportControlsEnabled="True"/>
+                    <Image Visibility="Collapsed" Name="image" Grid.Column="2"/>
+                    <MediaPlayerElement Visibility="Collapsed" AutoPlay="True" Name="video" Grid.Column="2" AreTransportControlsEnabled="True"/>
                 </Grid>
             </Grid>
             <Grid Margin="10" Grid.Row="2">
