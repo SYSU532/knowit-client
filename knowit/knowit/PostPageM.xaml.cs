@@ -26,6 +26,7 @@ namespace knowit
         }
         private async void InitializePost()
         {
+            myViewModels.allPosts.Clear();
             ObservableCollection<PostItem> posts = await NetworkControl.GetPostCollection(username, password);
             if(posts != null)
             {
