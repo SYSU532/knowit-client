@@ -14,35 +14,42 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="7*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="5*" />
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" BorderBrush="#e3e3e3" BorderThickness="0,1,0,1">
-                <Grid Margin="12,0">
-                    <TextBlock FontSize="30" VerticalAlignment="Top" Text="Not Hotdog"/>
-                    <TextBlock FontSize="15" Text="Jian Yang" VerticalAlignment="Bottom"/>
-                </Grid>
-            </Border>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <RichTextBlock Grid.Column="0" TextAlignment="Justify" Margin="12,0">
-                    <Paragraph TextIndent="24">Linked text containers allow text which does not fit in one element to overflow into a different element on the page. Creative use of linked text containers enables basic multicolumn support and other advanced page layouts.</Paragraph>
-                    <!-- Additional content not shown. -->
-                </RichTextBlock>
-                <Grid Grid.Column="2">
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <RichTextBlockOverflow x:Name="secondOverflowContainer" Grid.Row="0" Margin="12,0"/>
-                    <RichEditBox x:Name="editor" Grid.Row="1"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="title" Margin="10" Grid.Column="0" FontSize="25" VerticalAlignment="Bottom" Text="标题"/>
+                    <TextBlock Name="author" Margin="10" Grid.Row="1" Grid.Column="0" FontSize="25" VerticalAlignment="Bottom" Text="作者"/>
+                    <AppBarButton Grid.Row="1" Name="AddComment" Icon="Add" Click="AddComment_Click"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Image Name="image" Grid.Column="2"/>
+                    <MediaPlayerElement Name="video" Grid.Column="2" AreTransportControlsEnabled="True"/>
                 </Grid>
             </Grid>
+            <Grid Margin="10" Grid.Row="2">
+                <Border BorderBrush="#e3e3e3" BorderThickness="1,1,1,1">
+                    <RichTextBlock Name="passage" Margin="10">
+
+                    </RichTextBlock>
+                </Border>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            
         </Grid>
     </Grid>
 </Page>

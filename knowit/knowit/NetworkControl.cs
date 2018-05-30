@@ -198,7 +198,7 @@ namespace knowit
 
         }
 
-        public static PostItem PostDictToPostItem(Dictionary<string, object> postDict)
+        public static PostItem PostDictToPostItem(Dictionary<string, object> postDict, string id)
         {
             if ((string)postDict["code"] != "1") return null;
             string content = (string)postDict["content"];
@@ -207,7 +207,7 @@ namespace knowit
             int thumbs = Convert.ToInt32((string)postDict["thumbs"]);
             string title = (string)postDict["title"];
             string editor = (string)postDict["editor"];
-            return new PostItem(content, title, editor, imageURL, videoURL, thumbs,
+            return new PostItem(id, content, title, editor, imageURL, videoURL, thumbs,
                             (List<KeyValuePair<String, String>>)postDict["comment"]);
         }
 
@@ -219,7 +219,7 @@ namespace knowit
             foreach (var id in idList)
             {
                 var postDict = await GetPostFromID(username, password, id);
-                PostItem item = PostDictToPostItem(postDict);
+                PostItem item = PostDictToPostItem(postDict, id);
                 if (item == null)
                 {
                     Debug.WriteLine("Server Error!");

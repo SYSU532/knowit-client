@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using knowit.Models;
 using knowit.ViewModels;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
@@ -22,7 +23,12 @@ namespace knowit
         }
         private void Post_Click(object sender, ItemClickEventArgs args)
         {
-            this.Frame.Navigate(typeof(PostPage));
+            ListItem post = args.ClickedItem as ListItem;
+            string[] info = new string[3];
+            info[0] = username;
+            info[1] = password;
+            info[2] = post.id;
+            Frame.Navigate(typeof(PostPage), info);
         }
         private async void InitializePost()
         {
@@ -33,7 +39,7 @@ namespace knowit
                 foreach (PostItem item in posts)
                 {
                     string thumbs_num = item.thumbs.ToString();
-                    myViewModels.AddPost(item.editor, item.title, thumbs_num, item.imageURL, item.videoURL);
+                    myViewModels.AddPost(item.id, item.editor, item.title, thumbs_num, item.imageURL, item.videoURL);
                 }
             }
             

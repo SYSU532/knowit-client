@@ -23,9 +23,9 @@ namespace knowit.ViewModels
         public ObservableCollection<Models.ListItem> allPosts = new ObservableCollection<Models.ListItem>();
 
         //添加帖子
-        public void AddPost(string poster_name, string post_name, string thumbs_num, string image_url, string video_url)
+        public void AddPost(string id, string poster_name, string post_name, string thumbs_num, string image_url, string video_url)
         {
-            this.allPosts.Add(new Models.ListItem(poster_name, post_name, thumbs_num, image_url, video_url));
+            this.allPosts.Add(new Models.ListItem(id, poster_name, post_name, thumbs_num, image_url, video_url));
         }
     }
 }

@@ -15,10 +15,12 @@ namespace knowit
         public string videoURL;
         public int thumbs;
         public string title;
+        public string id;
         public bool hasImage { get { return imageURL != ""; } }
         public bool hasVideo { get { return videoURL != ""; } }
-        public PostItem(string con, string ti, string edi, string img, string vid, int thu, List<KeyValuePair<String, String>> com)
+        public PostItem(string id, string con, string ti, string edi, string img, string vid, int thu, List<KeyValuePair<String, String>> com)
         {
+            this.id = id;
             content = con;
             title = ti;
             editor = edi;
