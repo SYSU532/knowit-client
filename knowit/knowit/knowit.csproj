@@ -101,7 +101,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MessageItemDataTemplateSelector.cs" />
     <Compile Include="Models\ListItem.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="NetworkControl.cs" />
     <Compile Include="PostItem.cs" />
     <Compile Include="PostPage.xaml.cs">
@@ -120,6 +122,7 @@
     <Compile Include="UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ChatWindowViewModel.cs" />
     <Compile Include="ViewModels\ListItemViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +183,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp">
+      <Version>3.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -17,7 +17,7 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="5*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Margin="10" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -32,7 +32,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Name="title" Margin="10" Grid.Column="0" FontSize="25" VerticalAlignment="Bottom" Text="标题"/>
-                    <TextBlock Name="author" Margin="10" Grid.Row="1" Grid.Column="0" FontSize="14" VerticalAlignment="Center" Text="作者"/>
+                    <TextBlock Name="author" Margin="10" Grid.Row="1" Grid.Column="0" FontSize="14" VerticalAlignment="Top" Text="作者"/>
                     <Grid Grid.Column="1" Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -71,7 +71,16 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="1">
-            <ListView Name="comment_list" IsItemClickEnabled="False" ItemsSource="{x:Bind myViewModels.allComments}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Margin="10"
+                Grid.Row="0"
+                            Text="评论"
+                            FontSize="30"/>
+            <ListView Grid.Row="1" Name="comment_list" IsItemClickEnabled="False" ItemsSource="{x:Bind myViewModels.allComments}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

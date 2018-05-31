@@ -8,18 +8,21 @@ using knowit.Models;
 using knowit.ViewModels;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml;
 
 namespace knowit
 {
     public sealed partial class PostPageM : Page
     {
+        public static string res;
         private string username;
         private string password;
         ListItemViewModels myViewModels = ListItemViewModels.GetInstance();
+        ChatWindowViewModel myChatModels = ChatWindowViewModel.GetInstance();
         public PostPageM()
         {
-            this.InitializeComponent();
-
+            InitializeComponent();
+            NetworkControl.InitialWebSocket();
         }
         private void Post_Click(object sender, ItemClickEventArgs args)
         {
@@ -51,5 +54,20 @@ namespace knowit
             password = user_info[1];
             InitializePost();
         }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            NetworkControl.closeWs();
+        }
+        private async void SendMessage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if(message.Text != "")
+            {
+                await NetworkControl.SendChatMessage(username, password, message.Text);
+                message.Text = "";
+                message.Focus(FocusState.Programmatic);
+                message.Focus(FocusState.Pointer);
+            }
+        }
+
     }
 }

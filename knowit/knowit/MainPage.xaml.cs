@@ -63,18 +63,6 @@ namespace knowit
             newSrc.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
             personPic.ProfilePicture = newSrc;
         }
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-
-        }
-        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-
-        }
-        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-
-        }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             string[] user_info = e.Parameter as string[];
@@ -95,10 +83,14 @@ namespace knowit
             switch (item)
             {
                 case "注销":
+                    contentFrame.Navigate(typeof(SigninPage));
                     Frame.Navigate(typeof(SigninPage));
                     break;
                 case "创建帖子":
                     contentFrame.Navigate(typeof(CreatePostPage), info);
+                    break;
+                case "主页":
+                    contentFrame.Navigate(typeof(PostPageM), info);
                     break;
             }
         }
@@ -135,6 +127,14 @@ namespace knowit
             contentFrame.Navigated += On_Navigated;
             string[] temp = { username, password };
             contentFrame.Navigate(typeof(PostPageM), temp);
+            foreach (NavigationViewItemBase item in nvAll.MenuItems)
+            {
+                if (item is NavigationViewItem && item.Tag.ToString() == "home")
+                {
+                    nvAll.SelectedItem = item;
+                    break;
+                }
+            }
         }
         private void On_Navigated(object sender, NavigationEventArgs e)
         {

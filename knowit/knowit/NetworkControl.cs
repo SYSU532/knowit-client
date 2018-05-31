@@ -9,9 +9,12 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
+using Windows.Networking.Sockets;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 
 namespace knowit
 {
@@ -19,8 +22,60 @@ namespace knowit
     {
         public static string AccessingURI = "chat.chenmt.science";
         private const string httpsPrefix = "https://";
+        private const string wssPrefix = "wss://";
+        private const string wssPostfix = "/wss";
+        public static string username;
+
         public static string accessName { get { return httpsPrefix + AccessingURI; } }
 
+        public static MessageWebSocket ws;
+
+        public static void WebSocket_ReceivedMessage(MessageWebSocket ws, MessageWebSocketMessageReceivedEventArgs args)
+        {
+            DataReader reader = args.GetDataReader();
+            reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+            string result = reader.ReadString(reader.UnconsumedBufferLength);
+            string username = result.Substring(0, result.IndexOf(' '));
+            string content = result.Substring(result.IndexOf(' ') + 1, result.Length - 1 - result.IndexOf(' '));
+            //Here, you need to put receive message to the chat room view model.
+            Debug.WriteLine(result);
+            ChatWindowViewModel myChatViewModel = ChatWindowViewModel.GetInstance();
+            if(username == NetworkControl.username)
+            {
+                myChatViewModel.AddMessageSelf(username, content);
+            }
+            else
+            {
+                myChatViewModel.AddMessage(username, content);
+            }
+        }
+
+        public static async Task SendChatMessage(string username, string password, string message)
+        {
+            NetworkControl.username = username;
+            try
+            {
+                //Start to send messages
+                DataWriter writer = new DataWriter(ws.OutputStream);
+                writer.WriteString(username + " " + password + " " + message);
+                await writer.StoreAsync();
+            }
+            catch
+            {
+                //Connection error
+            }
+        }
+        public static async Task InitialWebSocket()
+        {
+            ws = new MessageWebSocket();
+            ws.Control.MessageType = Windows.Networking.Sockets.SocketMessageType.Utf8;
+            ws.MessageReceived += WebSocket_ReceivedMessage;
+            await ws.ConnectAsync(new Uri(wssPrefix + AccessingURI + wssPostfix));
+        }
+        public static void closeWs()
+        {
+            ws = null;
+        }
         public static async Task<Dictionary<string, string>> QueryUserInfo(string userName)
         {
             Dictionary<String, String> requestData = new Dictionary<string, string>

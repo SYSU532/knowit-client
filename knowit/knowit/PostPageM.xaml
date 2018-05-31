@@ -8,7 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <local:MessageItemDataTemplateSelector x:Key="MessageItemDataTemplateSelector"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="windowSize">
@@ -58,7 +60,7 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Image HorizontalAlignment="Left" Grid.Column="0" Width="15" Height="15" Source="Assets/post.png" VerticalAlignment="Top" />
+                                    <Image HorizontalAlignment="Left" Grid.Column="0" Width="15" Height="15" Source="Assets/knowit.png" VerticalAlignment="Top" />
                                     <TextBlock Grid.Column="0" FontSize="25" VerticalAlignment="Center" Text="{x:Bind post_name}"/>
                                     <TextBlock Grid.Column="0" FontSize="14" Text="{x:Bind poster_name}" VerticalAlignment="Bottom"/>
                                     <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="Assets/thumb.png" Width="15" Height="15" />
@@ -72,9 +74,34 @@
             </ScrollViewer>
         </Grid>
         <Grid Grid.Column="1" Name="chat">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
             <TextBlock
-                            Text="Chat Room"
-                            FontSize="36"/>
+                Grid.Row="0"
+                Text="Chat Room"
+                FontSize="36"/>
+            <ListView Name="view" Grid.Row="1" Background="#EEEEEE" 
+              ItemTemplateSelector="{StaticResource MessageItemDataTemplateSelector}"
+              ItemsSource="{x:Bind myChatModels.allMessages}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Margin" Value="10"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Width="80" Height="50" Grid.Column="0" Name="message"/>
+                <Button Grid.Column="1" Name="SendMessage" Click="SendMessage_Click" Content="发送" />
+            </Grid>
         </Grid>
     </Grid>
+    
 </Page>

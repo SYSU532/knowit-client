@@ -54,12 +54,12 @@ namespace knowit
                 media = file;
                 if(file.FileType == ".wmv" || file.FileType == ".mp4" || file.FileType == ".mkv" || file.FileType == ".avi")
                 {
-                    image.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    video.Visibility = Visibility.Visible;
                     video.Source = MediaSource.CreateFromStorageFile(file);
                 }
                 else
                 {
-                    video.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    image.Visibility = Visibility.Visible;
                     SoftwareBitmap softwareBitmap;
                     IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read);
                     BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);

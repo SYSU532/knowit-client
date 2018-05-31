@@ -34,8 +34,8 @@
                 <AppBarButton Grid.Row="1" Name="Create" Icon="Accept" Click="Create_Click" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">添加</AppBarButton>
             </Grid>
             <Grid Grid.Column="1">
-                <Image Name="image" Grid.Column="2"/>
-                <MediaPlayerElement Name="video" Grid.Column="2" AreTransportControlsEnabled="True"/>
+                <Image Visibility="Collapsed" Name="image" Grid.Column="2"/>
+                <MediaPlayerElement Visibility="Collapsed" Name="video" Grid.Column="2" AreTransportControlsEnabled="True"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">

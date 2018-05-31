@@ -36,8 +36,8 @@
         <Grid Background="#4CE69494">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="TopGridRow" Height="4*"/>
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
@@ -47,7 +47,7 @@
                     <RowDefinition x:Name="TopTitleRow" Height="2*"/>
                     <RowDefinition x:Name="TopThumbRow" Height="6*"/>
                 </Grid.RowDefinitions>
-                <TextBlock x:Name="Title" Grid.Row="1" Text="Know-It" HorizontalAlignment="Center"  VerticalAlignment="Bottom" 
+                <TextBlock x:Name="Title" Grid.Row="1" Text="Know-It" HorizontalAlignment="Center"  VerticalAlignment="Center" 
                            FontWeight="Bold" FontSize="30"/>
                 <Image x:Name="Logo" Source="Assets/knowit.png" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                        Height="180" Width="180"/>
@@ -77,7 +77,7 @@
                     <Button x:Name="SignupButton" Click="SignupButton_Click"  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                             Height="40" Width="80" Content="Sign Up"/>
                 </Grid>
-                <Button x:Name="ServerChangeButton" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                <Button x:Name="ServerChangeButton" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"
                         Height="40" Width="200" Content="Change Server">
                     <Button.Flyout>
                         <Flyout>
