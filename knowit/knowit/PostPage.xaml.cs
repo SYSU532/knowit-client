@@ -71,11 +71,7 @@ namespace knowit
             
             if (video.Visibility == Windows.UI.Xaml.Visibility.Visible)
             {
-                video.MediaPlayer.Pause();
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    video?.MediaPlayer.Dispose();
-                });
+                video.Source = null;
             }
             if (thumb_click == 1 && hasThumb != true)
             {

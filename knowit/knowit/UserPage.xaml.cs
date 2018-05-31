@@ -10,6 +10,10 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml;
 using Windows.UI.Popups;
+using System.Text.RegularExpressions;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
+using System.Text;
 
 namespace knowit
 {
@@ -42,6 +46,22 @@ namespace knowit
 
         private async void Commit_Change(object sender, RoutedEventArgs e)
         {
+            StringBuilder errBuilder = new StringBuilder();
+            if (!phonePattern.IsMatch(phoneBlock.Text))
+            {
+                errBuilder.Append("Phone Number Invalid!\n");
+            }
+            if (!emailPattern.IsMatch(emailBlock.Text))
+            {
+                errBuilder.Append("Email Address Invalid!\n");
+            }
+            if (errBuilder.ToString().Length != 0)
+            {
+                MessageDialog dialog = new MessageDialog(errBuilder.ToString(), "Error!");
+                await dialog.ShowAsync();
+                return;
+            }
+
             Dictionary<string, string> info = await NetworkControl.UserInfoModify(username, password, phoneBlock.Text, emailBlock.Text, CurrentPic);
             await WebView.ClearTemporaryWebDataAsync();
             
@@ -102,6 +122,47 @@ namespace knowit
         private void TextBlock_Tapped_2(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
+
+
+        private Regex emailPattern = new Regex("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$");
+        private Regex phonePattern = new Regex("^[1-9]\\d{10}");
+        private void phoneBlock_LosingFocus(UIElement sender, Windows.UI.Xaml.Input.LosingFocusEventArgs args)
+        {
+            if (phonePattern.IsMatch(phoneBlock.Text))
+            {
+                PhoneMsg.Text = "OK!";
+                PhoneMsg.Foreground = new SolidColorBrush(Colors.Green);
+            }
+            else
+            {
+                PhoneMsg.Text = "Phone Invalid!";
+                PhoneMsg.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        private void emailBlock_LosingFocus(UIElement sender, Windows.UI.Xaml.Input.LosingFocusEventArgs args)
+        {
+            if (emailPattern.IsMatch(emailBlock.Text))
+            {
+                EmailMsg.Text = "OK!";
+                EmailMsg.Foreground = new SolidColorBrush(Colors.Green);
+            }
+            else
+            {
+                EmailMsg.Text = "Email Invalid!";
+                EmailMsg.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        private void phoneBlock_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PhoneMsg.Text = "";
+        }
+
+        private void emailBlock_GotFocus(object sender, RoutedEventArgs e)
+        {
+            EmailMsg.Text = "";
         }
     }
 }

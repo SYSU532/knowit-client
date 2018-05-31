@@ -43,17 +43,20 @@
                 <TextBlock FontSize="20" Text="电话号码：" Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
                 <TextBlock FontSize="20" Text="邮箱：" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
                 <TextBlock x:Name="usernameBlock" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="" FontSize="18" />
+                <TextBlock x:Name="PhoneMsg" Grid.Column="1" FontSize="17" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{x:Bind phoneBlock.Text, Mode=OneWay}" Tapped="TextBlock_Tapped_1" FontSize="18">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout>
-                            <TextBox x:Name="phoneBlock" Text=""/>
+                            <TextBox x:Name="phoneBlock" Text="" LosingFocus="phoneBlock_LosingFocus" GotFocus="phoneBlock_GotFocus"/>
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                 </TextBlock>
+                <TextBlock x:Name="EmailMsg" Grid.Column="1" FontSize="17" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
                 <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{x:Bind emailBlock.Text, Mode=OneWay}" Tapped="TextBlock_Tapped_2" FontSize="18">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout>
-                            <TextBox x:Name="emailBlock" Text=""/>
+                            <TextBox x:Name="emailBlock" Text="" LosingFocus="emailBlock_LosingFocus" GotFocus="emailBlock_GotFocus"/>
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                 </TextBlock>

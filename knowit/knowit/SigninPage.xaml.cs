@@ -84,11 +84,13 @@ namespace knowit
             }
             else if (res["code"] == "1")
             {
-                msg = "Success!";
                 success = true;
             }
-            MessageDialog dialog = new MessageDialog(msg);
-            await dialog.ShowAsync();
+            if (msg != "")
+            {
+                MessageDialog dialog = new MessageDialog(msg);
+                await dialog.ShowAsync();
+            }
             if (success)
             {
                 string[] temp = new string[2];
@@ -125,5 +127,6 @@ namespace knowit
         {
             UserNameMsg.Text = "";
         }
+
     }
 }
