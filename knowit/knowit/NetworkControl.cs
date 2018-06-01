@@ -32,6 +32,7 @@ namespace knowit
 
         public static void WebSocket_ReceivedMessage(MessageWebSocket ws, MessageWebSocketMessageReceivedEventArgs args)
         {
+
             DataReader reader = args.GetDataReader();
             reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
             string result = reader.ReadString(reader.UnconsumedBufferLength);

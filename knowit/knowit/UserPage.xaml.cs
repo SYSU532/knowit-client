@@ -21,6 +21,8 @@ namespace knowit
     {
         private string username;
         private string password;
+        private string oldEmail;
+        private string oldPhone;
         private StorageFile CurrentPic = null;
         public UserPage()
         {
@@ -41,12 +43,14 @@ namespace knowit
             usernameBlock.Text = username;
             phoneBlock.Text = phone;
             emailBlock.Text = email;
+            oldPhone = phone;
+            oldEmail = email;
         }
         
 
         private async void Commit_Change(object sender, RoutedEventArgs e)
         {
-            if(emailBlock.Text == nowEmail.Text && phoneBlock.Text == nowPhone.Text)
+            if(emailBlock.Text == oldEmail && phoneBlock.Text == oldPhone)
             {
                 MessageDialog dialog = new MessageDialog("请先点击电话或邮箱以修改信息！");
                 await dialog.ShowAsync();
