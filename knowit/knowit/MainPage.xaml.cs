@@ -144,7 +144,8 @@ namespace knowit
                 {typeof(PostPageM), "home"},
                 {typeof(UserPage), "user"},
                 {typeof(CreatePostPage), "create"},
-                {typeof(PostPage), "post"}
+                {typeof(PostPage), "post"},
+                {typeof(SigninPage), "signin"},
             };
             String stringTag = lookup[contentFrame.SourcePageType];
 
