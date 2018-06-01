@@ -27,36 +27,27 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Name="title" Margin="10" Grid.Column="0" FontSize="25" VerticalAlignment="Bottom" Text="标题"/>
-                    <TextBlock Name="author" Margin="10" Grid.Row="1" Grid.Column="0" FontSize="14" VerticalAlignment="Top" Text="作者"/>
-                    <Grid Grid.Column="1" Grid.Row="0">
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Background="Transparent" Name="thumb" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="thumb_Click">
+                        <TextBlock Name="title" Margin="10" Grid.Column="0" FontSize="30" VerticalAlignment="Center" Text="标题"/>
+                        <TextBlock Name="author" Margin="10" Grid.Column="0" FontSize="15" VerticalAlignment="Bottom" Text="作者"/>
+                        <Button Background="Transparent" Grid.Column="1" Name="thumb"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="thumb_Click">
                             <Image Source="Assets/thumb.png" Width="15" Height="15"/>
                         </Button>
-                        <TextBlock Margin="5" Name="thumb_num" Grid.Column="1"  FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text=""/>
+                        <TextBlock Margin="5" Name="thumb_num" Grid.Column="2"  FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text=""/>
                     </Grid>
-                    <AppBarButton Name="app" AllowFocusOnInteraction="True" Grid.Row="1" Icon="Add" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                        <AppBarButton.Flyout>
-                            <Flyout>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBox Name="comment" Grid.Column="0" Width="30" Height="20"/>
-                                    <Button Grid.Column="1" Name="AddComment" Click="AddComment_Click">添加评论</Button>
-                                </Grid>
-                            </Flyout>
-                        </AppBarButton.Flyout>
-                    </AppBarButton>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RichEditBox Margin="10,20,0,20" Name="comment" Grid.Column="0" />
+                        <Button Name="app" FontSize="13" Click="AddComment_Click" Margin="20" Width="80" Height="40" AllowFocusOnInteraction="True" Grid.Row="1" Grid.Column="2" Content="添加评论" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    </Grid>
                 </Grid>
                 <Grid Margin="10" Grid.Column="1">
                     <Image Visibility="Collapsed" Name="image" Grid.Column="2"/>

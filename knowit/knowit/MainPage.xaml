@@ -116,7 +116,7 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Home" Content="主页" Tag="home" />
                 <NavigationViewItemSeparator/>
-                <NavigationViewItem Style="{StaticResource NavigationViewItemStyle1}">
+                <NavigationViewItem Tag="user" Style="{StaticResource NavigationViewItemStyle1}">
                     <Grid Name="user">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -140,8 +140,9 @@
                     </Grid>
                 </NavigationViewItem>
                 <NavigationViewItemSeparator/>
-                <NavigationViewItem Icon="Play" Content="注销" Tag="logout" />
-                <NavigationViewItem Icon="Save" Content="创建帖子" Tag="create" />
+                <NavigationViewItem Icon="AllApps" IsEnabled="False" Content="帖子" Tag="post" />
+                <NavigationViewItem Icon="Add" Content="创建帖子" Tag="create" />
+                <NavigationViewItem Icon="OtherUser" Content="注销" Tag="logout" />
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <HyperlinkButton x:Name="MoreInfoBtn"

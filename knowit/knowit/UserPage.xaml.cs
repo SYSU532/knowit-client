@@ -46,6 +46,12 @@ namespace knowit
 
         private async void Commit_Change(object sender, RoutedEventArgs e)
         {
+            if(emailBlock.Text == nowEmail.Text && phoneBlock.Text == nowPhone.Text)
+            {
+                MessageDialog dialog = new MessageDialog("请先点击电话或邮箱以修改信息！");
+                await dialog.ShowAsync();
+                return;
+            }
             StringBuilder errBuilder = new StringBuilder();
             if (!phonePattern.IsMatch(phoneBlock.Text))
             {

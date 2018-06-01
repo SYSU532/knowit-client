@@ -139,6 +139,24 @@ namespace knowit
         private void On_Navigated(object sender, NavigationEventArgs e)
         {
             nvAll.IsBackEnabled = contentFrame.CanGoBack;
+            Dictionary<Type, string> lookup = new Dictionary<Type, string>()
+            {
+                {typeof(PostPageM), "home"},
+                {typeof(UserPage), "user"},
+                {typeof(CreatePostPage), "create"},
+                {typeof(PostPage), "post"}
+            };
+            String stringTag = lookup[contentFrame.SourcePageType];
+
+            // set the new SelectedItem  
+            foreach (NavigationViewItemBase item in nvAll.MenuItems)
+            {
+                if (item is NavigationViewItem && item.Tag.Equals(stringTag))
+                {
+                    item.IsSelected = true;
+                    break;
+                }
+            }
         }
     }
 }

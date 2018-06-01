@@ -60,12 +60,12 @@ namespace knowit
         }
         private async void SendMessage_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if(message.Text != "")
+            string mess = null;
+            message.Document.GetText(Windows.UI.Text.TextGetOptions.AdjustCrlf, out mess);
+            if (mess != "")
             {
-                await NetworkControl.SendChatMessage(username, password, message.Text);
-                message.Text = "";
-                message.Focus(FocusState.Programmatic);
-                message.Focus(FocusState.Pointer);
+                await NetworkControl.SendChatMessage(username, password, mess);
+                message.Document.SetText(Windows.UI.Text.TextSetOptions.ApplyRtfDocumentDefaults, "");
             }
         }
 

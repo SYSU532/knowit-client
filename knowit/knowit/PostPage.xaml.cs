@@ -128,16 +128,18 @@ namespace knowit
         }
         private async void AddComment_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if(comment.Text == "")
+            string mess = null;
+            comment.Document.GetText(Windows.UI.Text.TextGetOptions.AdjustCrlf, out mess);
+            if (mess == "")
             {
                 MessageDialog dialog = new MessageDialog("评论不能为空！");
                 await dialog.ShowAsync();
             }
             else
             {
-                app.Flyout.Hide();
-                myViewModels.AddComment(username, comment.Text);
-                Dictionary<string, string> info = await NetworkControl.PostComment(username, password, id, comment.Text);
+                myViewModels.AddComment(username, mess);
+                Dictionary<string, string> info = await NetworkControl.PostComment(username, password, id, mess);
+                comment.Document.SetText(Windows.UI.Text.TextSetOptions.ApplyRtfDocumentDefaults, "");
             }
         }
 

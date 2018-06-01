@@ -76,30 +76,33 @@
         <Grid Grid.Column="1" Name="chat">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock
+                Margin="10"
                 Grid.Row="0"
                 Text="Chat Room"
                 FontSize="36"/>
-            <ListView Name="view" Grid.Row="1" Background="#EEEEEE" 
-              ItemTemplateSelector="{StaticResource MessageItemDataTemplateSelector}"
-              ItemsSource="{x:Bind myChatModels.allMessages}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="Margin" Value="10"></Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+            <Border Margin="5" Grid.Row="1" BorderBrush="#e3e3e3" BorderThickness="1">
+                <ListView Margin="5" Name="view" Grid.Row="1" Background="#EEEEEE"
+                  ItemTemplateSelector="{StaticResource MessageItemDataTemplateSelector}"
+                  ItemsSource="{x:Bind myChatModels.allMessages}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="Margin" Value="10"></Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Border>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Width="80" Height="50" Grid.Column="0" Name="message"/>
-                <Button Grid.Column="1" Name="SendMessage" Click="SendMessage_Click" Content="发送" />
+                <RichEditBox Margin="10" Grid.Column="0" Name="message"/>
+                <Button Grid.Column="1" Width="80" Height="40" Name="SendMessage" Click="SendMessage_Click" HorizontalAlignment="Center" Content="发送" />
             </Grid>
         </Grid>
     </Grid>
