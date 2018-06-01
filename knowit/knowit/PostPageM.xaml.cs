@@ -9,6 +9,9 @@ using knowit.ViewModels;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
+using System.IO;
+using Windows.UI.Notifications;
+using Windows.Data.Xml.Dom;
 
 namespace knowit
 {
@@ -19,10 +22,19 @@ namespace knowit
         private string password;
         ListItemViewModels myViewModels = ListItemViewModels.GetInstance();
         ChatWindowViewModel myChatModels = ChatWindowViewModel.GetInstance();
+
+        private DispatcherTimer timer = new DispatcherTimer();
+        private int tick_id = 0;
+
         public PostPageM()
         {
             InitializeComponent();
             NetworkControl.InitialWebSocket();
+
+            //Control tile change time
+            timer.Interval = new TimeSpan(0, 0, 3);
+            timer.Tick += ChangeTile;
+            timer.Start();
         }
         private void Post_Click(object sender, ItemClickEventArgs args)
         {
@@ -67,6 +79,37 @@ namespace knowit
                 await NetworkControl.SendChatMessage(username, password, mess);
                 message.Document.SetText(Windows.UI.Text.TextSetOptions.ApplyRtfDocumentDefaults, "");
             }
+        }
+
+        private void ChangeTile(object sender, object e)
+        {
+            XmlDocument xmld = new XmlDocument();
+            xmld.LoadXml(File.ReadAllText("Tile.xml"));
+            var textList = xmld.GetElementsByTagName("text");
+            var imgList = xmld.GetElementsByTagName("image");
+            if(myViewModels.allPosts.Count == 0)
+            {
+                return;
+            }else if(tick_id < myViewModels.allPosts.Count)
+            {
+                try
+                {
+                    textList[0].InnerText = myViewModels.allPosts[tick_id].poster_name;
+                    textList[1].InnerText = myViewModels.allPosts[tick_id].post_name;
+                    textList[2].InnerText = myViewModels.allPosts[tick_id].poster_name;
+                    textList[3].InnerText = myViewModels.allPosts[tick_id].post_name;
+                    textList[4].InnerText = myViewModels.allPosts[tick_id].poster_name;
+                    textList[5].InnerText = myViewModels.allPosts[tick_id].post_name;
+                    textList[6].InnerText = myViewModels.allPosts[tick_id].poster_name;
+                    textList[7].InnerText = myViewModels.allPosts[tick_id].post_name;
+                    //Send Tile notification
+                    var update_notification = new TileNotification(xmld);
+                    TileUpdateManager.CreateTileUpdaterForApplication().Update(update_notification);
+                    TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true);
+                    tick_id++;
+                }catch(Exception eq) { }
+            }
+
         }
 
     }
