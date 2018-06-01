@@ -171,10 +171,11 @@ namespace knowit
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
             DataRequest request = args.Request;
-            string mess = null;
-            comment.Document.GetText(Windows.UI.Text.TextGetOptions.AdjustCrlf, out mess);
+            Paragraph p = passage.Blocks[0] as Paragraph;
+            Run r = p.Inlines[0] as Run;
+            string mess = r.Text;
             request.Data.Properties.Title = title.Text;
-            request.Data.SetText(mess);
+            request.Data.SetText(mess + "\n\n\nSome great stuffs from knowIt!");
             request.Data.Properties.Description = "Some great stuffs from knowIt!";
             DataRequestDeferral deferral = request.GetDeferral();
             RandomAccessStreamReference stream = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/knowit.png"));
