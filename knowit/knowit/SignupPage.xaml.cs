@@ -73,7 +73,7 @@ namespace knowit
             var box = (TextBox)sender;
             if (box != null)
             {
-                if (usernamePattern.IsMatch(box.Text))
+                if (usernamePattern.IsMatch(box.Text) && !box.Text.Contains(" "))
                 {
                     UsernameMsg.Text = "OK!";
                     UsernameMsg.Foreground = new SolidColorBrush(Colors.Green);
@@ -173,7 +173,7 @@ namespace knowit
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder builder = new StringBuilder();
-            if (!usernamePattern.IsMatch(UsernameBox.Text))
+            if (!usernamePattern.IsMatch(UsernameBox.Text) || UsernameBox.Text.Contains(" "))
                 builder.Append("Username Invalid!\n");
             if (!passwordPattern.IsMatch(PasswordBox.Password))
                 builder.Append("Password Invalid!\n");
