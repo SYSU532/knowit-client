@@ -50,9 +50,9 @@ namespace knowit
 
         private async void Commit_Change(object sender, RoutedEventArgs e)
         {
-            if(emailBlock.Text == oldEmail && phoneBlock.Text == oldPhone)
+            if(emailBlock.Text == oldEmail && phoneBlock.Text == oldPhone && CurrentPic == null)
             {
-                MessageDialog dialog = new MessageDialog("请先点击电话或邮箱以修改信息！");
+                MessageDialog dialog = new MessageDialog("请先点击电话或邮箱或头像以修改信息！");
                 await dialog.ShowAsync();
                 return;
             }
