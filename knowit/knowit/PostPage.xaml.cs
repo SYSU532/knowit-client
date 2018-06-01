@@ -172,6 +172,9 @@ namespace knowit
         {
             DataRequest request = args.Request;
             string mess = null;
+            Paragraph p = passage.Blocks[0] as Paragraph;
+            Run run = p.Inlines[0] as Run;
+            string s = run.Text;
             comment.Document.GetText(Windows.UI.Text.TextGetOptions.AdjustCrlf, out mess);
             request.Data.Properties.Title = title.Text;
             request.Data.SetText(mess);

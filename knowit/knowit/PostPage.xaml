@@ -17,7 +17,7 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="5*" />
             </Grid.RowDefinitions>
-            <Grid Margin="10" Grid.Row="0">
+            <Grid Margin="10, 10, 10, 0" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -33,7 +33,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="title" Margin="10" Grid.Column="0" FontSize="30" VerticalAlignment="Center" Text="标题"/>
+                        <TextBlock Name="title" Margin="10" Grid.Column="0" FontSize="30" VerticalAlignment="Top" Text="标题"/>
                         <TextBlock Name="author" Margin="10" Grid.Column="0" FontSize="15" VerticalAlignment="Bottom" Text="作者"/>
                         <Button Background="Transparent" Grid.Column="1" Name="thumb"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="thumb_Click">
                             <Image Source="Assets/thumb.png" Width="15" Height="15"/>
