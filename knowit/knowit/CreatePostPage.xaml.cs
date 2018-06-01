@@ -80,6 +80,12 @@ namespace knowit
         {
             string pass = null;
             passage.Document.GetText(Windows.UI.Text.TextGetOptions.AdjustCrlf, out pass);
+            if(pass == "")
+            {
+                MessageDialog dialog = new MessageDialog("帖子内容不能为空！");
+                await dialog.ShowAsync();
+                return;
+            }
             Dictionary<string, string> info = await NetworkControl.PublishPost(username, password, title.Text, pass, media);
             if(info["code"] != "1")
             {

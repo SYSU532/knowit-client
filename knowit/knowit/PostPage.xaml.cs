@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Media.Core;
 using Windows.Media.Streaming.Adaptive;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
@@ -157,6 +159,27 @@ namespace knowit
                 thumb_num.Text = (--res).ToString();
                 thumb_click--;
             }
+        }
+
+        private void SharePost_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            var originalSource = e.OriginalSource as MenuFlyoutItem;
+            dataTransferManager.DataRequested += DataTransferManager_DataRequested;
+            DataTransferManager.ShowShareUI();
+        }
+        private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+        {
+            DataRequest request = args.Request;
+            string mess = null;
+            comment.Document.GetText(Windows.UI.Text.TextGetOptions.AdjustCrlf, out mess);
+            request.Data.Properties.Title = title.Text;
+            request.Data.SetText(mess);
+            request.Data.Properties.Description = "Some great stuffs from knowIt!";
+            DataRequestDeferral deferral = request.GetDeferral();
+            RandomAccessStreamReference stream = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/knowit.png"));
+            request.Data.SetBitmap(stream);
+            deferral.Complete();
         }
     }
 }
